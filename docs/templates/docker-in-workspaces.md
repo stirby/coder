@@ -4,7 +4,7 @@ There are a few ways to run Docker within container-based Coder workspaces.
 
 | Method                                                     | Description                                                                                                                                                        | Limitations                                                                                                                                                                                                                                        |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Sysbox container runtime](#sysbox-container-runtime)      | Install the sysbox runtime on your Kubernetes nodes for secure docker-in-docker and systemd-in-docker. Works with GKE, EKS, AKS.                                   | Requires [compatible nodes](https://github.com/nestybox/sysbox#host-requirements). Max of 16 sysbox pods per node. [See all](https://github.com/nestybox/sysbox/blob/master/docs/user-guide/limitations.md)                                        |
+| [Sysbox container runtime](#sysbox-container-runtime)      | Install the sysbox runtime on your Kubernetes nodes for secure docker-in-docker and systemd-in-docker. Works with GKE, EKS, AKS.                                   | Requires [compatible nodes](https://github.com/nestybox/sysbox#host-requirements).                                                                                                                                                                 |
 | [Envbox](#envbox)                                          | A container image with all the packages necessary to run an inner sysbox container. Removes the need to setup sysbox-runc on your nodes. Works with GKE, EKS, AKS. | Requires running the outer container as privileged (the inner container that acts as the workspace is locked down). Requires compatible [nodes](https://github.com/nestybox/sysbox/blob/master/docs/distro-compat.md#sysbox-distro-compatibility). |
 | [Rootless Podman](#rootless-podman)                        | Run podman inside Coder workspaces. Does not require a custom runtime or privileged containers. Works with GKE, EKS, AKS, RKE, OpenShift                           | Requires smarter-device-manager for FUSE mounts. [See all](https://github.com/containers/podman/blob/main/rootless.md#shortcomings-of-rootless-podman)                                                                                             |
 | [Privileged docker sidecar](#privileged-sidecar-container) | Run docker as a privileged sidecar container.                                                                                                                      | Requires a privileged container. Workspaces can break out to root on the host machine.                                                                                                                                                             |
@@ -122,20 +122,15 @@ resource "kubernetes_pod" "dev" {
 }
 ```
 
-> Sysbox CE (Community Edition) supports a maximum of 16 pods (workspaces) per
-> node on Kubernetes. See the
-> [Sysbox documentation](https://github.com/nestybox/sysbox/blob/master/docs/user-guide/install-k8s.md#limitations)
-> for more details.
-
 ## Envbox
 
 [Envbox](https://github.com/coder/envbox) is an image developed and maintained
 by Coder that bundles the sysbox runtime. It works by starting an outer
 container that manages the various sysbox daemons and spawns an unprivileged
 inner container that acts as the user's workspace. The inner container is able
-to run system-level software similar to a regular virtual machine (e.g.
-`systemd`, `dockerd`, etc). Envbox offers the following benefits over running
-sysbox directly on the nodes:
+to run system-level software similar to a regular virtual machine (`systemd`,
+`dockerd`, etc). Envbox offers the following benefits over running sysbox
+directly on the nodes:
 
 - No custom runtime installation or management on your Kubernetes nodes.
 - No limit to the number of pods that run envbox.
@@ -256,7 +251,7 @@ documentation:
    kubectl label nodes --all smarter-device-manager=enabled
    ```
 
-   > ⚠️ **Warning**: If you are using a managed Kubernetes distribution (e.g.
+   > ⚠️ **Warning**: If you are using a managed Kubernetes distribution (such as
    > AKS, EKS, GKE), be sure to set node labels via your cloud provider.
    > Otherwise, your nodes may drop the labels and break podman functionality.
 

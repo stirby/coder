@@ -2,7 +2,7 @@
 
 Coder with Docker has the following advantages:
 
-- Simple installation (everything is on a single box)
+- Isolated installation (everything is on a single box)
 - Workspace images are easily configured
 - Workspaces share resources for burst operations
 
@@ -62,10 +62,10 @@ Coder with Docker has the following advantages:
 
    <img src="../images/platforms/docker/create-workspace.png">
 
-   Now wait a few moments for the workspace to build... After the first build,
-   the image is cached and subsequent builds will take a few seconds.
+   Now wait a few moments for the workspace to build. After the first build, the
+   image is cached and subsequent builds will take a few seconds.
 
-1. Your workspace is ready to go!
+1. Your workspace is ready to go.
 
    <img src="../images/platforms/docker/ides.png">
 
@@ -89,7 +89,7 @@ You can use a remote Docker host in 2 ways.
 
 ### Docker-based workspace is stuck in "Connecting..."
 
-Ensure you have an externally-reachable `CODER_ACCESS_URL` set. See
+Ensure you have an externally reachable `CODER_ACCESS_URL` set. See
 [troubleshooting templates](../templates/index.md#Troubleshooting) for more
 steps.
 

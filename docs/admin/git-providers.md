@@ -26,7 +26,7 @@ providers are supported:
 
 Example callback URL:
 `https://coder.example.com/gitauth/primary-github/callback`. Use an arbitrary ID
-for your provider (e.g. `primary-github`).
+for your provider (for example `primary-github`).
 
 Set the following environment variables to
 [configure the Coder server](./configure.md):
@@ -133,8 +133,8 @@ CODER_GITAUTH_1_TOKEN_URL="https://github.example.com/login/oauth/access_token"
 CODER_GITAUTH_1_VALIDATE_URL="https://github.example.com/login/oauth/access_token/info"
 ```
 
-To support regex matching for paths (e.g. github.com/orgname), you'll need to
-add this to the
+To support regex matching for paths (for example github.com/orgname), you'll
+need to add this to the
 [Coder agent startup script](https://registry.terraform.io/providers/coder/coder/latest/docs/resources/agent#startup_script):
 
 ```shell
@@ -143,7 +143,8 @@ git config --global credential.useHttpPath true
 
 ## Require git authentication in templates
 
-If your template requires git authentication (e.g. running `git clone` in the
+If your template requires git authentication (for example, running `git clone`
+in the
 [startup_script](https://registry.terraform.io/providers/coder/coder/latest/docs/resources/agent#startup_script)),
 you can require users authenticate via git prior to creating a workspace:
 

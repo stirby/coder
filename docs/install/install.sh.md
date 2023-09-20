@@ -65,7 +65,7 @@ fish_add_path "/opt/homebrew/bin"
 
 > ℹ If you ran install.sh with a `--prefix` flag, you can replace
 > `/opt/homebrew` with whatever value you used there. Make sure to leave the
-> `/bin` at the end!
+> `/bin` at the end.
 
 Now we can observe that the order has changed:
 
@@ -101,7 +101,7 @@ sudo apk del coder
 ```
 
 If the conflicting binary is not installed by your system package manager, you
-can just delete it.
+can delete it.
 
 ```shell
 # You might not need `sudo`, depending on the location
